@@ -17,7 +17,13 @@ var app = new Vue({
   },
 
   // ------------------------------------------------------------------------------------
-  
+
+  beforeMount(){ 
+    this.getRemoteData('/sampledata.json');  // get remote .json data during page load
+  },
+
+  // ------------------------------------------------------------------------------------
+
   methods: {
 
     getRemoteData: function(uri) {
@@ -62,10 +68,6 @@ var app = new Vue({
       var upperBound = lowerBound + (this.imagesPerPage - 1);
       return ((index >= lowerBound) && (index <= upperBound)) ? true : false;
     }
-  }, 
-
-  beforeMount(){ 
-    this.getRemoteData('/sampledata.json');  // get remote .json data during page load
   }
 
 })
