@@ -1,0 +1,41 @@
+  <!DOCTYPE html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>VueJS Image Gallery</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+            crossorigin="anonymous">
+      <link rel="stylesheet" href="/styles.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+      <div id="app">
+        
+        <div class="container-fluid">
+          <h1>{{ pageTitle }}</h1>
+          <ul id="photogallery">
+              
+            <transition-group name="fade">
+              <li v-for="(photo, index) in photos" v-if="showImage(index)" :key="index">
+                <img :src="photo.imageurl" ><br>
+                <small>{{ photo.caption }}</small>
+              </li>
+            </transition-group>
+            
+          </ul>
+        </div>
+
+        <div class="container-fluid" id="navbuttons">
+          <button class="float-left btn btn-primary"  v-on:click="pagePrev" :class="{disabled : (currentPage == 0)}">Prev</button>
+          <button class="float-right btn btn-primary" v-on:click="pageNext" :class="{disabled : (currentPage >= maxPage()-1)}">Next</button>
+          <div class="d-flex justify-content-center">Page {{ currentPage + 1 }} of {{ maxPage() }}</div>
+        </div>
+
+      </div>   
+      <script src="/gallery.js"></script>
+    </body>
+
+  </html>

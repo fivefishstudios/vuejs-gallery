@@ -1,0 +1,32 @@
+h1{
+  color: #444;
+}
+
+#photogallery {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+li{
+  margin: 0px 0px 2em 0px;
+  padding: 0px;
+  transition: all 0.35s;
+}
+
+li img {
+  width: 100%;
+}
+
+#navbuttons {
+  margin: 2em 0em;
+  overflow: auto;
+}
+
+.fade-enter, .fade-leave-active
+{
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 0;
+}
