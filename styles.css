@@ -11,14 +11,15 @@ h1{
 li{
   margin: 0px 0px 2em 0px;
   padding: 0px;
-  transition: all 0.35s;
+  transition: all 0.15s;
 }
 
 li img {
   width: 100%;
+  border-radius: 10px;
 }
 
-#navbuttons {
+.navbuttons {
   margin: 2em 0em;
   overflow: auto;
 }

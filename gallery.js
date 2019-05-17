@@ -2,39 +2,11 @@ var app = new Vue({
   el: '#app',
   data: {
     currentPage: 0,
-    imagesPerPage: 3,
+    imagesPerPage: 2,
     pageTitle: "VueJS Simple Gallery",
     // Future: the following data would all come from a remote API call 
-    photos: [
-      { imageurl: 'https://images.unsplash.com/photo-1557652646-c4efca50f2de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        caption: 'This is photo of mountain. Id nostrud non esse est ea irure nulla ad.'      
-      },
-      { imageurl: 'https://images.unsplash.com/photo-1557600280-9ceddf1a3cc3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        caption: 'These are snowy mountains. Nulla enim culpa et cillum ad non officia veniam ex sint fugiat commodo minim.'
-      },
-      {
-        imageurl: 'https://images.unsplash.com/photo-1557626204-59dd03fd2d31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        caption: 'Under starry skies at night. Consectetur elit esse anim officia est aliqua consequat pariatur cupidatat irure tempor.'
-      },
-      { imageurl: 'https://images.unsplash.com/photo-1513390282409-ece9661014f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80',
-        caption: 'Bridge to the setting sun. Esse reprehenderit excepteur quis tempor amet.'
-      },
-      {
-        imageurl: 'https://images.unsplash.com/photo-1467521335787-2f0fc0f0e9a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1145&q=80',
-        caption: 'Brooklyn Bridge, whaccha looking at! Nisi do eu dolore sit dolore duis ea ullamco eiusmod aliquip sunt nulla minim.'
-      },
-      { 
-        imageurl: 'https://images.unsplash.com/photo-1555284023-249222086985?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        caption: 'Reflection Mountain. Adipisicing non voluptate culpa mollit nulla non anim.'
-      },
-      { 
-        imageurl: 'https://images.unsplash.com/photo-1549767742-ccfdeb07b71d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-        caption: 'Dragon... say Dragon! Anim ut duis officia ad quis do ut.'
-      },
-      { imageurl: 'https://images.unsplash.com/photo-1519055301076-a34b55a8b4e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1272&q=80',
-        caption: 'Paper Lanterns. Tempor qui consequat sint veniam ad ipsum aliquip.'
-      }
-    ]
+    // mockup: sampledata.json
+    photos: []
   },
   
   // ------------------------------------------------------------------------------------
@@ -49,6 +21,16 @@ var app = new Vue({
   // ------------------------------------------------------------------------------------
   
   methods: {
+
+    getData: function() {
+      // retrieve data from a .json file
+      this.$http.get('/sampledata.json')
+        .then( (response) => {
+          var jsonData = JSON.parse(response.bodyText);
+          this.photos = jsonData.data;  // .data is an array[] so we can assign it directly to photos
+        })
+    },
+
     maxPage: function(){
       // max. number of page results based on total images and images per page
       return Math.ceil(this.totalImages / this.imagesPerPage);
@@ -82,6 +64,10 @@ var app = new Vue({
       var upperBound = lowerBound + (this.imagesPerPage - 1);
       return ((index >= lowerBound) && (index <= upperBound)) ? true : false;
     }
+  }, 
+
+  beforeMount(){ 
+    this.getData();  // get .json data upon program startup
   }
 
 })
