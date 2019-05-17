@@ -2,11 +2,9 @@ var app = new Vue({
   el: '#app',
   data: {
     currentPage: 0,
-    imagesPerPage: 2,
+    imagesPerPage: 3,
     pageTitle: "VueJS Simple Gallery",
-    // Future: the following data would all come from a remote API call 
-    // mockup: sampledata.json
-    photos: []
+    photos: []  // photos will be populated via a remote API call to retrieve a JSON data 
   },
   
   // ------------------------------------------------------------------------------------
@@ -22,12 +20,12 @@ var app = new Vue({
   
   methods: {
 
-    getData: function() {
-      // retrieve data from a .json file
-      this.$http.get('/sampledata.json')
+    getRemoteData: function(uri) {
+      // retrieve remote json data via http GET
+      this.$http.get(uri)
         .then( (response) => {
-          var jsonData = JSON.parse(response.bodyText);
-          this.photos = jsonData.data;  // .data is an array[] so we can assign it directly to photos
+          // .data is an array[] so we can assign it directly to photos
+          this.photos = JSON.parse(response.bodyText).data; 
         })
     },
 
@@ -67,7 +65,7 @@ var app = new Vue({
   }, 
 
   beforeMount(){ 
-    this.getData();  // get .json data upon program startup
+    this.getRemoteData('/sampledata.json');  // get remote .json data during page load
   }
 
 })
